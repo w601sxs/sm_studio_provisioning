@@ -1,0 +1,8 @@
+Parameters:
+  GroupsUsersRoles:
+    Type: CommaSeparatedList
+    Description: Comma delimited list of users, groups and roles who will have access to launch this product
+
+  
+
+
