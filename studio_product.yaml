@@ -1,8 +1,70 @@
 Parameters:
-  GroupsUsersRoles:
-    Type: CommaSeparatedList
-    Description: Comma delimited list of users, groups and roles who will have access to launch this product
+  LaunchPrincipal:
+    Type: String
+    Description: Specify an ARN of a user, group or role to be used for provisioning this product
 
+Resources:
+  SageMakerStudioProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Owner: AWS
+      Name: SageMaker Studio
+      ProvisioningArtifactParameters:
+        - Name: v1
+          Description: Provisions a SageMaker domain and its associated roles for Studio users
+          Info:
+            LoadTemplateFromURL: https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio.template
+
+  SageMakerStudioProductPortfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties:
+      ProviderName: AWS
+      DisplayName: SageMaker Product Portfolio
+
+  SageMakerStudioProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      PortfolioId: !Ref SageMakerStudioProductPortfolio
+      ProductId: !Ref SageMakerStudioProduct
   
+  SageMakerStudioPortfolioPrincipalAssociation:
+    Type: AWS::ServiceCatalog::PortfolioPrincipalAssociation
+    Properties:
+      PrincipalARN: !Ref LaunchPrincipal
+      PortfolioId: !Ref SageMakerStudioProductPortfolio
+      PrincipalType: IAM
 
-
+  SageMakerProvisioningRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: SageMakerProvisioningRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: 
+              Service:
+                - servicecatalog.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: CloudFormationAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudformation:CreateStack
+                  - cloudformation:UpdateStack
+                  - cloudformation:DeleteStack
+                  - cloudformation:DescribeStackEvents
+                  - cloudformation:DescribeStacks
+                Resource: arn:aws:cloudformation:*:*:stack/SC-*
+  
+  SageMakerStudioPortfolioLaunchRoleConstraint:
+    Type: AWS::ServiceCatalog::LaunchRoleConstraint
+    Properties:
+      PortfolioId: !Ref SageMakerStudioProductPortfolio
+      ProductId: !Ref SageMakerStudioProduct
+      RoleArn: !GetAtt SageMakerProvisioningRole.Arn
+      Description: Role used for provisioning
