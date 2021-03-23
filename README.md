@@ -14,6 +14,7 @@
     - **SageMakerDeveloperPolicy**
     - **SageMakerReadOnlyAccessPolicy**
     - **SageMakerAccessSupportingServicesPolicy**
-   If needed, you can customize these policies.
-   
+ If needed, you can customize these policies.
+ 
+6. 
    
