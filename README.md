@@ -8,4 +8,12 @@
 
 3. Provide VPC and Subnet IDs used for SageMaker communication
 
+4. Create a SageMaker IAM admin user and attach the **CreateSageMakerStudioUserPolicy**
 
+5. Create IAM user for each Studio users. Attach the following policies to them: 
+    - **SageMakerDeveloperPolicy**
+    - **SageMakerReadOnlyAccessPolicy**
+    - **SageMakerAccessSupportingServicesPolicy**
+   If needed, you can customize these policies.
+   
+   
