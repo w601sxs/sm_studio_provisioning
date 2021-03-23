@@ -48,19 +48,48 @@ Resources:
             Action:
               - sts:AssumeRole
       Policies:
-        - PolicyName: CloudFormationAccess
+        - PolicyName: ProvisioningAccess
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
                   - cloudformation:CreateStack
-                  - cloudformation:UpdateStack
                   - cloudformation:DeleteStack
+                  - cloudformation:UpdateStack
+                Resource: arn:aws:cloudformation:*:*:stack/SC-*
+              - Effect: Allow
+                Action:
                   - cloudformation:DescribeStackEvents
                   - cloudformation:DescribeStacks
-                Resource: arn:aws:cloudformation:*:*:stack/SC-*
-  
+                  - cloudformation:GetTemplateSummary
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - sagemaker:CreateDomain
+                  - sagemaker:DescribeDomain
+                  - sagemaker:DeleteDomain
+                Resource: "*"         
+              - Effect: Allow
+                Action:                  
+                  - s3:Get*
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    "s3:ExistingObjectTag/servicecatalog:provisioning": "true"
+              - Effect: Allow
+                Action:
+                  - iam:AttachRolePolicy
+                  - iam:CreateRole
+                  - iam:CreatePolicy
+                  - iam:DetachRolePolicy
+                  - iam:PassRole
+                  - iam:PutRolePolicy
+                  - iam:Delete*
+                  - iam:Get*
+                  - iam:List*                  
+                Resource: "*"
+
   SageMakerStudioPortfolioLaunchRoleConstraint:
     Type: AWS::ServiceCatalog::LaunchRoleConstraint
     Properties:

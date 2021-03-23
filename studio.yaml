@@ -1,7 +1,4 @@
 Parameters:
-  DomainName:
-    Type: String
-    Description: Name of the domain to be created.
   VpcId:
     Type: String
     Description: The ID of the Amazon Virtual Private Cloud (VPC) that Studio uses for communication.
@@ -125,33 +122,28 @@ Resources:
                 - sagemaker.amazonaws.com
             Action:
               - sts:AssumeRole
+      Policies:
+        - PolicyName: SageMakerTrainingJobPolicy
+          PolicyDocument:            
+            Version: "2012-10-17"
+            Statement:
+              - Sid: SageMakerTraingingJobExecutionPolicy
+                Effect: Allow
+                Action:
+                  - cloudwatch:PutMetricData
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:CreateLogGroup
+                  - logs:DescribeLogStreams
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                Resource: "*"        
 
-  SageMakerTraingingJobExecutionPolicy:
-    Type: AWS::IAM::Policy
-    Properties:
-      Roles: 
-        - SageMakerTrainingJobExecutionRole
-      PolicyName: SageMakerTraingingJobExecutionPolicy
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: SageMakerTraingingJobExecutionPolicy
-            Effect: Allow
-            Action:
-              - cloudwatch:PutMetricData
-              - logs:CreateLogStream
-              - logs:PutLogEvents
-              - logs:CreateLogGroup
-              - logs:DescribeLogStreams
-              - s3:GetObject
-              - s3:PutObject
-              - s3:ListBucket
-              - ecr:GetAuthorizationToken
-              - ecr:BatchCheckLayerAvailability
-              - ecr:GetDownloadUrlForLayer
-              - ecr:BatchGetImage
-            Resource: "*"        
-  
   SageMakerDeveloperPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
@@ -232,7 +224,7 @@ Resources:
   SageMakerDomain:
     Type: AWS::SageMaker::Domain
     Properties:
-      DomainName: !Ref DomainName
+      DomainName: SageMaker-Domain
       VpcId: !Ref VpcId
       SubnetIds: !Split [',', !Ref Subnets ]      
       AuthMode: IAM
