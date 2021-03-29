@@ -1,0 +1,24 @@
+Parameters:
+  DomainId:
+    Type: String
+    Description: ID of the SageMaker Domain
+  ExecutionRole:
+    Type: String
+    Description: Execution role assigned to the Studio instance
+  UserId:
+     Type: String
+     Description: Name of the IAM user
+
+Resources:
+
+  UserProfile:
+    Type: AWS::SageMaker::UserProfile
+    Properties:
+      UserProfileName: !Ref UserId
+      DomainId: !Ref DomainId
+      Tags:
+        - Key: studiouserid
+          Value: !Ref UserId
+      UserSettings:
+        ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerTeamExecutionRole"] ]
+

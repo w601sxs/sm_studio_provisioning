@@ -31,7 +31,7 @@ Resources:
   CreatePresignedDomainUrlPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      ManagedPolicyName: CreatePresignedDomainUrlPolicy
+      ManagedPolicyName: git
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -178,12 +178,6 @@ Resources:
             Effect: Allow
             Action:
               - sagemaker:Create*
-            Condition:
-              ForAnyValue:StringEquals:
-                aws:TagKeys:
-                  - team
-              StringEqualsIfExists:
-                aws:RequestTag/team: "${aws:PrincipalTag/team}"
             Resource: "*"
           - Sid: AmazonSageMakerUpdateDeleteExecutePolicy
             Effect: Allow
@@ -196,14 +190,11 @@ Resources:
               - sagemaker:AssociateTrialComponent
               - sagemaker:BatchPutMetrics
             Resource: "*"
-            Condition:
-              StringEquals:
-                aws:PrincipalTag/team: "${sagemaker:ResourceTag/team}"
 
-  SageMakerTeamExecutionRole:
+  SageMakerExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: SageMakerTeamExecutionRole
+      RoleName: SageMakerExecutionRole
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -217,9 +208,6 @@ Resources:
         - !Ref SageMakerReadOnlyAccessPolicy
         - !Ref SageMakerAccessSupportingServicesPolicy
         - !Ref SageMakerDeveloperPolicy
-      Tags:
-        - Key: team
-          Value: StudioTeam
 
   SageMakerDomain:
     Type: AWS::SageMaker::Domain
@@ -229,4 +217,4 @@ Resources:
       SubnetIds: !Split [',', !Ref Subnets ]      
       AuthMode: IAM
       DefaultUserSettings:
-        ExecutionRole: !GetAtt SageMakerTeamExecutionRole.Arn
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
