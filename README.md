@@ -2,7 +2,7 @@
 
 This repository includes reference architecture and cloud formation templates for provisioning SageMaker studio for Data Science teams. We use Service Catalog to provision SageMaker studio and Studio Users. 
 
-If you would like to learn more about how we go about provisiong, please review the sections below. If you would like get started rightaway, please click the button below to create a Service Catalog Product and Product Portfolio which can provision Studio and its associated roles: [![Launch in us-west-2](https://raw.githubusercontent.com/awslabs/aws-media-insights-engine/development/docs/assets/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=sagemaker-studio&templateURL=https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio_product.template)
+If you would like to learn more about how we go about provisiong, please review the sections below. If you would like get started rightaway, please click the button below to create a Service Catalog Product and Product Portfolio which can provision Studio and its associated roles: [![Launch in us-west-2](https://raw.githubusercontent.com/awslabs/aws-media-insights-engine/development/docs/assets/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=sagemaker-studio&templateURL=https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/launch.template)
 
 
 Let's start by looking the key components within SageMaker Studio that we will need to consider while provisioning
