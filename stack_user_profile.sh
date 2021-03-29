@@ -10,4 +10,4 @@ aws --region us-east-2 cloudformation create-stack \
     --stack-name studio-profile \
     --template-body file://product_user_profile.yaml \
     --capabilities CAPABILITY_NAMED_IAM \
-    --parameters 'ParameterKey=DomainId,ParameterValue=' 'ParameterKey=UserProfileName,ParameterValue=user1' 
+    --parameters 'ParameterKey=DomainId,ParameterValue=d-k0chuieakbwk' 'ParameterKey=UserProfileName,ParameterValue=user1' 
