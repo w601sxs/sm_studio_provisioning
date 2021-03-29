@@ -1,100 +1,189 @@
 Parameters:
-  LaunchPrincipal:
+  VpcId:
     Type: String
-    Description: Specify an ARN of a user, group or role to be used for provisioning this product
+    Description: The ID of the Amazon Virtual Private Cloud (VPC) that Studio uses for communication.
+  Subnets:
+    Type: String
+    Description: The comma separated list of VPC subnet IDs that Studio uses for communication.
+
 
 Resources:
-
-  SageMakerStudioProduct:
-    Type: AWS::ServiceCatalog::CloudFormationProduct
-    Properties:
-      Owner: AWS
-      Name: SageMaker Studio
-      ProvisioningArtifactParameters:
-        - Name: v1
-          Description: Provisions a SageMaker domain and its associated roles for Studio users
-          Info:
-            LoadTemplateFromURL: https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio.template
-
-  SageMakerStudioProductPortfolio:
-    Type: AWS::ServiceCatalog::Portfolio
-    Properties:
-      ProviderName: AWS
-      DisplayName: SageMaker Product Portfolio
-
-  SageMakerStudioProductPortfolioAssociation:
-    Type: AWS::ServiceCatalog::PortfolioProductAssociation
-    Properties:
-      PortfolioId: !Ref SageMakerStudioProductPortfolio
-      ProductId: !Ref SageMakerStudioProduct
   
-  SageMakerStudioPortfolioPrincipalAssociation:
-    Type: AWS::ServiceCatalog::PortfolioPrincipalAssociation
-    Properties:
-      PrincipalARN: !Ref LaunchPrincipal
-      PortfolioId: !Ref SageMakerStudioProductPortfolio
-      PrincipalType: IAM
+  # Policies which can be attached to Studio Users (Data Science personas) 
+  ########################################################################
 
-  SageMakerProvisioningRole:
+  SageMakerReadOnlyAccessPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: SageMakerReadOnlyAccessPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AmazonSageMakerDescribeReadyOnlyPolicy
+            Effect: Allow
+            Action:
+              - sagemaker:Describe*
+              - sagemaker:GetSearchSuggestions
+            Resource: "*"
+          - Sid: AmazonSageMakerListOnlyPolicy
+            Effect: Allow
+            Action:
+              - sagemaker:List*
+            Resource: "*"            
+          - Sid: AmazonSageMakerUIandMetricsOnlyPolicy
+            Effect: Allow
+            Action:
+              - sagemaker:*App
+              - sagemaker:Search
+              - sagemaker:RenderUiTemplate
+              - sagemaker:BatchGetMetrics
+            Resource: "*"
+          - Sid: AmazonSageMakerEC2ReadOnlyPolicy
+            Effect: Allow
+            Action:
+              - ec2:DescribeDhcpOptions
+              - ec2:DescribeNetworkInterfaces
+              - ec2:DescribeRouteTables
+              - ec2:DescribeSecurityGroups
+              - ec2:DescribeSubnets
+              - ec2:DescribeVpcEndpoints
+              - ec2:DescribeVpcs
+            Resource: "*"
+          - Sid: AmazonSageMakerIAMReadOnlyPolicy
+            Effect: Allow
+            Action:
+              - iam:ListRoles
+            Resource: "*"
+
+  SageMakerAccessSupportingServicesPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: SageMakerAccessSupportingServicesPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AmazonSageMakerCRUDAccessS3Policy
+            Effect: Allow
+            Action:
+              - s3:PutObject
+              - s3:GetObject
+              - s3:AbortMultipartUpload
+              - s3:DeleteObject
+              - s3:CreateBucket
+              - s3:ListBucket
+              - s3:PutBucketCORS
+              - s3:ListAllMyBuckets
+              - s3:GetBucketCORS
+              - s3:GetBucketLocation
+            Resource: "*"
+
+  SageMakerDeveloperPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: SageMakerDeveloperPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: SageMakerStudioCreateApp
+            Effect: Allow
+            Action:
+              - sagemaker:CreateApp
+            Resource: "*"
+          - Sid: AmazonSageMakerStudioIAMPassRole
+            Effect: Allow
+            Action:
+              - iam:PassRole
+            Resource: !GetAtt SageMakerTrainingJobExecutionRole.Arn
+            Condition:
+              StringEquals:
+                iam:PassedToService: sagemaker.amazonaws.com
+          - Sid: SageMakerInvokeEndpointRole
+            Effect: Allow
+            Action:
+              - sagemaker:InvokeEndpoint
+            Resource: "*"
+          - Sid: AmazonSageMakerAddTags
+            Effect: Allow
+            Action:
+              - sagemaker:AddTags
+            Resource: "*"
+          - Sid: AmazonSageMakerCreate
+            Effect: Allow
+            Action:
+              - sagemaker:Create*
+            Resource: "*"
+          - Sid: AmazonSageMakerUpdateDeleteExecutePolicy
+            Effect: Allow
+            Action:
+              - sagemaker:Delete*
+              - sagemaker:Stop*
+              - sagemaker:Update*
+              - sagemaker:Start*
+              - sagemaker:DisassociateTrialComponent
+              - sagemaker:AssociateTrialComponent
+              - sagemaker:BatchPutMetrics
+            Resource: "*"
+
+  SageMakerExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: SageMakerProvisioningRole
+      RoleName: SageMakerExecutionRole
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal: 
               Service:
-                - servicecatalog.amazonaws.com
+                - sagemaker.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - !Ref SageMakerReadOnlyAccessPolicy
+        - !Ref SageMakerAccessSupportingServicesPolicy
+        - !Ref SageMakerDeveloperPolicy
+
+  SageMakerDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      DomainName: SageMaker-Domain
+      VpcId: !Ref VpcId
+      SubnetIds: !Split [',', !Ref Subnets ]      
+      AuthMode: IAM
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
+  SageMakerTrainingJobExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: SageMakerTrainingJobExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: 
+              Service:
+                - sagemaker.amazonaws.com
             Action:
               - sts:AssumeRole
       Policies:
-        - PolicyName: ProvisioningAccess
-          PolicyDocument:
+        - PolicyName: SageMakerTrainingJobPolicy
+          PolicyDocument:            
             Version: "2012-10-17"
             Statement:
-              - Effect: Allow
+              - Sid: SageMakerTraingingJobExecutionPolicy
+                Effect: Allow
                 Action:
-                  - cloudformation:CreateStack
-                  - cloudformation:DeleteStack
-                  - cloudformation:UpdateStack
-                Resource: arn:aws:cloudformation:*:*:stack/SC-*
-              - Effect: Allow
-                Action:
-                  - cloudformation:DescribeStackEvents
-                  - cloudformation:DescribeStacks
-                  - cloudformation:GetTemplateSummary
-                Resource: "*"
-              - Effect: Allow
-                Action:
-                  - sagemaker:CreateDomain
-                  - sagemaker:DescribeDomain
-                  - sagemaker:DeleteDomain
-                Resource: "*"         
-              - Effect: Allow
-                Action:                  
-                  - s3:Get*
-                Resource: "*"
-                Condition:
-                  StringEquals:
-                    "s3:ExistingObjectTag/servicecatalog:provisioning": "true"
-              - Effect: Allow
-                Action:
-                  - iam:AttachRolePolicy
-                  - iam:CreateRole
-                  - iam:CreatePolicy
-                  - iam:DetachRolePolicy
-                  - iam:PassRole
-                  - iam:PutRolePolicy
-                  - iam:Delete*
-                  - iam:Get*
-                  - iam:List*                  
-                Resource: "*"
+                  - cloudwatch:PutMetricData
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:CreateLogGroup
+                  - logs:DescribeLogStreams
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                Resource: "*"        
 
-  SageMakerStudioPortfolioLaunchRoleConstraint:
-    Type: AWS::ServiceCatalog::LaunchRoleConstraint
-    Properties:
-      PortfolioId: !Ref SageMakerStudioProductPortfolio
-      ProductId: !Ref SageMakerStudioProduct
-      RoleArn: !GetAtt SageMakerProvisioningRole.Arn
-      Description: Role used for provisioning
