@@ -20,5 +20,5 @@ Resources:
         - Key: studiouserid
           Value: !Ref UserId
       UserSettings:
-        ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerTeamExecutionRole"] ]
+        ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerExecutionRole"] ]
 

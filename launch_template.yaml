@@ -5,16 +5,30 @@ Parameters:
 
 Resources:
 
+  # Products populated to Service Catalog
+  ###################################################  
+  
   SageMakerStudioProduct:
     Type: AWS::ServiceCatalog::CloudFormationProduct
     Properties:
       Owner: AWS
-      Name: SageMaker Studio
+      Name: SageMaker Studio Domain
       ProvisioningArtifactParameters:
         - Name: v1
           Description: Provisions a SageMaker domain and its associated roles for Studio users
           Info:
-            LoadTemplateFromURL: https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio.template
+            LoadTemplateFromURL: https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio_product.template
+
+  SageMakerUserProfileProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Owner: AWS
+      Name: SageMaker Studio User Profile
+      ProvisioningArtifactParameters:
+        - Name: v1
+          Description: Provisions a new User Profile under SageMaker Studio
+          Info:
+            LoadTemplateFromURL: https://studio-provisioning-aggarzo.s3-us-west-2.amazonaws.com/studio_user_profile.template
 
   SageMakerStudioProductPortfolio:
     Type: AWS::ServiceCatalog::Portfolio
@@ -28,12 +42,26 @@ Resources:
       PortfolioId: !Ref SageMakerStudioProductPortfolio
       ProductId: !Ref SageMakerStudioProduct
   
+  SageMakerUserProfileProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      PortfolioId: !Ref SageMakerStudioProductPortfolio
+      ProductId: !Ref SageMakerUserProfileProduct
+
+
+# Sets the principal who can initate provisioning from Service Catalog
+#######################################################################
+  
   SageMakerStudioPortfolioPrincipalAssociation:
     Type: AWS::ServiceCatalog::PortfolioPrincipalAssociation
     Properties:
       PrincipalARN: !Ref LaunchPrincipal
       PortfolioId: !Ref SageMakerStudioProductPortfolio
       PrincipalType: IAM
+
+
+# Role used by Service Catalog to provision products
+#####################################################  
 
   SageMakerProvisioningRole:
     Type: AWS::IAM::Role
