@@ -15,4 +15,4 @@ Resources:
       DomainId: !Ref DomainId
       UserSettings:
         ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerExecutionRole"] ]
-# arn:aws:iam::163619147629:role/SageMakerExecutionRole
+
