@@ -2,13 +2,16 @@ Parameters:
   DomainId:
     Type: String
     Description: ID of the SageMaker Domain
+  UserProfileName:
+    Type: String
+    Description: Name the new user profile
 
 Resources:
 
   UserProfile:
     Type: AWS::SageMaker::UserProfile
     Properties:
-      UserProfileName: !Ref UserId
+      UserProfileName: !Ref UserProfileName
       DomainId: !Ref DomainId
       UserSettings:
-        ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerExecutionRole"] ]
+        ExecutionRole: SageMakerExecutionRole
