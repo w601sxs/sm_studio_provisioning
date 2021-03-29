@@ -124,6 +124,9 @@ Resources:
               - sagemaker:BatchPutMetrics
             Resource: "*"
 
+  # Execution Roles used by Studio and SageMaker jobs
+  ########################################################################
+
   SageMakerExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -141,16 +144,6 @@ Resources:
         - !Ref SageMakerReadOnlyAccessPolicy
         - !Ref SageMakerAccessSupportingServicesPolicy
         - !Ref SageMakerDeveloperPolicy
-
-  SageMakerDomain:
-    Type: AWS::SageMaker::Domain
-    Properties:
-      DomainName: SageMaker-Domain
-      VpcId: !Ref VpcId
-      SubnetIds: !Split [',', !Ref Subnets ]      
-      AuthMode: IAM
-      DefaultUserSettings:
-        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
 
   SageMakerTrainingJobExecutionRole:
     Type: AWS::IAM::Role
@@ -186,4 +179,18 @@ Resources:
                   - ecr:GetDownloadUrlForLayer
                   - ecr:BatchGetImage
                 Resource: "*"        
+
+  # SageMaker Domain
+  ########################################################################
+
+  SageMakerDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      DomainName: SageMaker-Domain
+      VpcId: !Ref VpcId
+      SubnetIds: !Split [',', !Ref Subnets ]      
+      AuthMode: IAM
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
 
