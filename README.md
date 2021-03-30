@@ -22,7 +22,7 @@ The following table describes two different personas that interact with Amazon S
 
 Reference Architecture (TODO)
 
-
+![](./figures/StudioBlog.jpg)
 
 
 Below are the steps that you will go through when you launch the cloudformation template:
