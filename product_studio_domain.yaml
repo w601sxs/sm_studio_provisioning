@@ -1,12 +1,11 @@
-
 Parameters:
- VpcId:
+  VpcId:
     Type: String
     Description: The ID of the Amazon Virtual Private Cloud (VPC) that Studio uses for communication.
+
   Subnets:
     Type: String
-    Description: The comma separated list of VPC subnet IDs that Studio uses for communication.
-
+    Description: "The comma separated list of VPC subnet IDs that Studio uses for communication."
 
 Resources:
 
@@ -194,6 +193,3 @@ Resources:
       AuthMode: IAM
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
-
-
-
