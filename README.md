@@ -39,6 +39,8 @@ Below are the steps you will go through [ Andras to Update]:
 
 4. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
+![Alt Step 1](assets/step1.jpg?raw=true "Step 1")
+
 5. Provide VPC and Subnet IDs used for SageMaker communication
 
 6. Create a SageMaker IAM admin user and attach the **CreateSageMakerStudioUserPolicy**
