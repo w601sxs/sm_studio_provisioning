@@ -48,9 +48,12 @@ Below are the steps you will go through:
 
 5. Get the domain-id of your newly created SageMaker Domain. Go to the SageMaker Console, and hit on SageMaker studio on the left pane.
 
-![Alt Step 3](assets/step3.jpg?raw=true "Step 2")
+![Alt Step 3](assets/step3.jpg?raw=true "Step 3")
 
 6. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
 
+![Alt Step 4](assets/step4.jpg?raw=true "Step 4")
 
+7. Provide the IAM user name of the Data Scientist to whom the Studio Profile will belong to as well as the SageMaker domain ID in the parameters section. Then hit the Product Launch button.
 
+![Alt Step 5](assets/step5.jpg?raw=true "Step 5")
