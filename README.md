@@ -54,6 +54,6 @@ Below are the steps you will go through:
 
 ![Alt Step 4](assets/step4.jpg?raw=true "Step 4")
 
-7. Provide the IAM user name of the Data Scientist to whom the Studio Profile will belong to as well as the SageMaker domain ID in the parameters section. Then hit the Product Launch button.
+7. Provide the Studio User Profile name along with the SageMaker domain ID in the parameters section. Then hit the Product Launch button.
 
 ![Alt Step 5](assets/step5.jpg?raw=true "Step 5")
