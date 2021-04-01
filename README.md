@@ -21,14 +21,13 @@ Below are the resources the template provisions:
 2. Provisioning IAM Role
 3. Data Scientist IAM Role
 4. Studio Execution IAM Role
-5. VPC and Subnets
-6. Three Service Catalog products 
-- Create Domain
-- Create User
-- Attach Image 
+5. Three Service Catalog products 
+* *Create Domain
+* *Create User
+* *Attach Image 
 
 
-Below are the steps you will go through [ Andras to Update]:
+Below are the steps you will go through:
 
 0. Create an IAM user with console login capabilities and access to Service Catalog [TODO: provide minimal policies]. This user has been used to provision SageMaker products. Note that, the user does not need permission to any SageMaker resources!
 
