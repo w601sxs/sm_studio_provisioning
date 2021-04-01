@@ -47,12 +47,11 @@ Below are the steps you will go through [ Andras to Update]:
 
 ![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
 
+5. Get the domain-id of your newly created SageMaker Domain. Go to the SageMaker Console, and hit on SageMaker studio on the left pane.
+
+![Alt Step 3](assets/step3.jpg?raw=true "Step 2")
+
 6. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
 
 
-
-
-```bash
-was sagemaker create-user-profile --domain-id [domain-id] --user-profile-name [user profile name] --tags Key=studiouserid,Value=[iam user] --user-settings ExecutionRole=arn:aws:iam::[account id]:role/SageMakerTeamExecutionRole
-```
 
