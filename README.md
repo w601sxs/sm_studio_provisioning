@@ -41,17 +41,14 @@ Below are the steps you will go through [ Andras to Update]:
 
 ![Alt Step 1](assets/step1.jpg?raw=true "Step 1")
 
-5. Provide VPC and Subnet IDs used for SageMaker communication
+5. Provide a name for the product and hit the Launch Product button
 
-6. Create a SageMaker IAM admin user and attach the **CreateSageMakerStudioUserPolicy**
+![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
 
-7. Create IAM user for each Studio users and attach the **CreatePresignedDomainUrlPolicy** to them.
 
-8. As an admin user, create user profiles for each Studio user with the following command:
+
 
 ```bash
 was sagemaker create-user-profile --domain-id [domain-id] --user-profile-name [user profile name] --tags Key=studiouserid,Value=[iam user] --user-settings ExecutionRole=arn:aws:iam::[account id]:role/SageMakerTeamExecutionRole
 ```
-
-9. If you need to group your studio users into teams, create new SageMaker team execution roles and assign the team execution roles to the corresponding users.
 
