@@ -1,12 +1,3 @@
-Parameters:
-  VpcId:
-    Type: String
-    Description: The ID of the Amazon Virtual Private Cloud (VPC) that Studio uses for communication.
-  Subnets:
-    Type: String
-    Description: The comma separated list of VPC subnet IDs that Studio uses for communication.
-
-
 Resources:
   
   # Policies which can be attached to Studio Users (Data Science personas) 
@@ -180,6 +171,62 @@ Resources:
                   - ecr:BatchGetImage
                 Resource: "*"        
 
+
+  # VPCs and Subnets
+  ########################################################################
+  
+  SageMakerVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.10.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: SageMaker VPC
+  
+  SageMakerInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    DependsOn: SageMakerVPC
+  
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref SageMakerVPC
+      InternetGatewayId: !Ref SageMakerInternetGateway
+
+  SageMakerSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SageMakerVPC
+      CidrBlock: 10.10.0.0/16
+      AvailabilityZone: !Select [ 0, !GetAZs ]
+      MapPublicIpOnLaunch: true
+      Tags:
+      - Key: Name
+        Value: SageMaker VPC Subnet
+    
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref SageMakerVPC
+  
+  InternetRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      RouteTableId: !Ref RouteTable
+      GatewayId: !Ref SageMakerInternetGateway
+
+  SageMakerSubnetRouteAssociation:   
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref SageMakerSubnet
+  
+
+
   # SageMaker Domain
   ########################################################################
 
@@ -187,8 +234,9 @@ Resources:
     Type: AWS::SageMaker::Domain
     Properties:
       DomainName: SageMaker-Domain
-      VpcId: !Ref VpcId
-      SubnetIds: !Split [',', !Ref Subnets ]      
+      VpcId: !Ref SageMakerVPC
+      SubnetIds:
+        - !Ref SageMakerSubnet
       AuthMode: IAM
       DefaultUserSettings:
         ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
