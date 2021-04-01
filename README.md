@@ -30,20 +30,24 @@ Below are the resources the template provisions:
 
 Below are the steps you will go through [ Andras to Update]:
 
+0. Create an IAM user with console login capabilities and access to Service Catalog [TODO: provide minimal policies]. This user has been used to provision SageMaker products. Note that, the user does not need permission to any SageMaker resources!
+
 1. Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch the region you would like.
 
 2. Click next
 
-3. Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product.
+3. Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product. Use the user you just created during the first step.
   - Don't forget to enable IAM roles creation capabilities before launching the stack
 
 4. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
 ![Alt Step 1](assets/step1.jpg?raw=true "Step 1")
 
-5. Provide a name for the product and hit the Launch Product button
+5. Provide a name for the product, your VPC and subenet IDs used for SageMaker communication and hit the Launch Product button
 
 ![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
+
+6. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
 
 
 
