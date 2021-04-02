@@ -22,9 +22,9 @@ Below are the resources the template provisions:
 3. Data Scientist IAM Role
 4. Studio Execution IAM Role
 5. Three Service Catalog products 
-* *Create Domain
-* *Create User
-* *Attach Image 
+* Create Domain
+* Create User
+* Attach Image 
 
 
 Below are the steps you will go through:
