@@ -47,7 +47,7 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 ![Alt IAM capabilites](assets/iam_capabilities.jpg?raw=true "IAM Capabilities")
 
-5. Go to the **Service Catalog** console, click on **Administration / Products** on the left navigation plane. Check if all SageMaker Studio products have been provisionged.
+5. Go to the **Service Catalog** console, click on **Administration / Products** on the left navigation plane. Check if all SageMaker Studio products have been provisioned.
 
 ![Alt Service Catalog Products](assets/service_catalog_products.jpg?raw=true "Service Catalog Products")
 
@@ -62,7 +62,7 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 ![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
 
-### Provisiion SageMaker User Profiles
+### Provision SageMaker User Profiles
 
 1. Go to the SageMaker Console and navigate to **SageMaker Studio** on the left pane. Get the domain-id of your newly created SageMaker Domain. 
 
