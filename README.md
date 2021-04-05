@@ -39,8 +39,15 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 2. Click next
 
-3. Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product. Use the user you just created during the first step.
-  - Don't forget to enable IAM roles creation capabilities before launching the stack
+3. Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product. Use the user you just created during the first step. Click the **Next** button.
+ 
+![Alt Launch Principal](assets/launch_principal.jpg?raw=true "Launch Principal")
+  
+4. Click the **Next** button. Acknoledge that AWS CloudFormation template will create IAM resources by clicking the checkbox at the bottom of the page. Hit the **Create stack** button.
+
+
+
+### Provision SageMaker Studio Domain
 
 4. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
