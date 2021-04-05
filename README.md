@@ -45,6 +45,11 @@ Note that, you also can create just an IAM role instead of an IAM user which can
   
 4. Click the **Next** button. Acknoledge that AWS CloudFormation template will create IAM resources by clicking the checkbox at the bottom of the page. Hit the **Create stack** button.
 
+![Alt IAM capabilites](assets/iam_capabilities.jpg?raw=true "IAM Capabilities")
+
+5. Go to the **Service Catalog** console, click on **Administration / Products** on the left navigation plane. Check if all SageMaker Studio products have been provisionged.
+
+![Alt Service Catalog Products](assets/service_catalog_products.jpg?raw=true "Service Catalog Products")
 
 
 ### Provision SageMaker Studio Domain
