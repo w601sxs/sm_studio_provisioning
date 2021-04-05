@@ -45,26 +45,37 @@ Note that, you also can create just an IAM role instead of an IAM user which can
   
 4. Click the **Next** button. Acknoledge that AWS CloudFormation template will create IAM resources by clicking the checkbox at the bottom of the page. Hit the **Create stack** button.
 
+![Alt IAM capabilites](assets/iam_capabilities.jpg?raw=true "IAM Capabilities")
+
+5. Go to the **Service Catalog** console, click on **Administration / Products** on the left navigation plane. Check if all SageMaker Studio products have been provisionged.
+
+![Alt Service Catalog Products](assets/service_catalog_products.jpg?raw=true "Service Catalog Products")
 
 
 ### Provision SageMaker Studio Domain
 
-4. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
+1. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
 ![Alt Step 1](assets/step1.jpg?raw=true "Step 1")
 
-5. Provide a name for the product, your VPC and subenet IDs used for SageMaker communication and hit the Launch Product button
+2. Provide a name for the product, your VPC and subenet IDs used for SageMaker communication and hit the **Launch Product** button
 
 ![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
 
-5. Get the domain-id of your newly created SageMaker Domain. Go to the SageMaker Console, and hit on SageMaker studio on the left pane.
+### Provisiion SageMaker User Profiles
+
+1. Go to the SageMaker Console and navigate to **SageMaker Studio** on the left pane. Get the domain-id of your newly created SageMaker Domain. 
 
 ![Alt Step 3](assets/step3.jpg?raw=true "Step 3")
 
-6. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
+2. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
 
 ![Alt Step 4](assets/step4.jpg?raw=true "Step 4")
 
-7. Provide the Studio User Profile name along with the SageMaker domain ID in the parameters section. Then hit the Product Launch button.
+3. Provide the Studio User Profile name along with the SageMaker domain ID in the parameters section. Then hit the **Launch Product** button.
 
 ![Alt Step 5](assets/step5.jpg?raw=true "Step 5")
+
+4. Navigate to the SageMaker Studio console and check if the new User Profile has been created. Click on the **Open Studio** button to launch Studio.
+
+![Alt User Profile](assets/user_profile.jpg?raw=true "User Profile")
