@@ -1,4 +1,4 @@
-## Best practices for provisioning Amazon SageMaker Studio
+# Best practices for provisioning Amazon SageMaker Studio
 
 This repository includes reference architecture and cloud formation templates for provisioning SageMaker Studio. We use Service Catalog to set up and provision users. Diagram below showcases two flows that are supported, Cloud Admin and Data Scientist flows.
 
@@ -27,11 +27,13 @@ Below are the resources the template provisions:
 * Attach Image 
 
 
-Below are the steps you will go through:
+## Below are the steps you will go through:
 
-0. Create an IAM user with console login capabilities and access to Service Catalog [TODO: provide minimal policies]. This user has been used to provision SageMaker products. Note that, the user does not need permission to any SageMaker resources!
+### Populate Sevice Catalog Products
 
-1. Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch the region you would like.
+0. You will need an IAM user designated to use for launch product provisioning from Service Catalog. Please attach the **ServiceCartalogEndUserFullAccess** managed policy to the IAM user. Note that, the IAM user used for product provisoning from Service Catalog does not need access to SageMaker. Service Catalog will use a separate role for spinning up SageMaker Studio resources which will be also created along with the Service Catalog products.
+
+1. Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch to other regions before starting the CNF template.
 
 2. Click next
 
