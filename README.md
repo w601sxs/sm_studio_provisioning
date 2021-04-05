@@ -76,3 +76,6 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 ![Alt Step 5](assets/step5.jpg?raw=true "Step 5")
 
+4. Navigate to the SageMaker Studio console and check if the new User Profile has been created. Click on the **Open Studio** button to launch Studio.
+
+![Alt User Profile](assets/user_profile.jpg?raw=true "User Profile")
