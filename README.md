@@ -54,22 +54,25 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 ### Provision SageMaker Studio Domain
 
-4. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
+1. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
 ![Alt Step 1](assets/step1.jpg?raw=true "Step 1")
 
-5. Provide a name for the product, your VPC and subenet IDs used for SageMaker communication and hit the Launch Product button
+2. Provide a name for the product, your VPC and subenet IDs used for SageMaker communication and hit the **Launch Product** button
 
 ![Alt Step 2](assets/step2.jpg?raw=true "Step 2")
 
-5. Get the domain-id of your newly created SageMaker Domain. Go to the SageMaker Console, and hit on SageMaker studio on the left pane.
+### Provisiion SageMaker User Profiles
+
+1. Go to the SageMaker Console and navigate to **SageMaker Studio** on the left pane. Get the domain-id of your newly created SageMaker Domain. 
 
 ![Alt Step 3](assets/step3.jpg?raw=true "Step 3")
 
-6. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
+2. To provision a user profile, go to service catalog and launch the **SageMaker User Profile** product.
 
 ![Alt Step 4](assets/step4.jpg?raw=true "Step 4")
 
-7. Provide the Studio User Profile name along with the SageMaker domain ID in the parameters section. Then hit the Product Launch button.
+3. Provide the Studio User Profile name along with the SageMaker domain ID in the parameters section. Then hit the **Launch Product** button.
 
 ![Alt Step 5](assets/step5.jpg?raw=true "Step 5")
+
