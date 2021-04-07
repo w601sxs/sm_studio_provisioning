@@ -4,6 +4,15 @@ This repository includes reference architecture and cloud formation templates fo
 
 ![Alt Flow Diagram](images/flow_diagram.png?raw=true "Flow Diagram")
 
+The above architecture diagram shows the necessary permissions and flow for the two user personas - Cloud Admin and Data Scientist.
+* Cloud Admin logs in to AWS with the `Cloud Admin Role`. This role enables them to access Service Catalog to launch products. Products in this example are a Studio Domain and a Studio User Profile.
+* The `Provisioning Role` is assumed by SageMaker and has the permissions to
+    - Create a Studio Domain
+    - Create a Studio User Profile
+    - Attach a Sagemaker Studio custom image to the Studio Domain
+* The data scientist logs in to AWS with the `Data Scientist` Role. The role has permissions to create a pre-signed URL to enable the data scientist to login to SageMaker Studio.
+* SageMaker Studio will then assume a `Studio Execution Role` as defined in the data scientists's user profile which will have the necessary permissions to create or launch a `JupyterServer App` to complete the user login process.
+
 If you would like to learn more about how we go about provisioning, please review the sections below. If you would like get started with the setup, please click the button below to create a Service Catalog Product and Product Portfolio which can provision Studio and its associated roles: 
 
 [![Launch in us-west-2](https://raw.githubusercontent.com/awslabs/aws-media-insights-engine/development/docs/assets/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=sagemaker-studio&templateURL=https://aws-ml-blog.s3-us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/launch.template)
