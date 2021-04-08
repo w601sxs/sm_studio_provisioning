@@ -15,7 +15,7 @@ The above architecture diagram shows the necessary permissions and flow for the 
 
 If you would like to learn more about how we go about provisioning, please review the sections below. If you would like get started with the setup, please click the button below to create a Service Catalog Product and Product Portfolio which can provision Studio and its associated roles: 
 
-[![Launch in us-west-2](https://raw.githubusercontent.com/awslabs/aws-media-insights-engine/development/docs/assets/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=sagemaker-studio&templateURL=https://aws-ml-blog.s3-us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/launch.template)
+[![Launch in us-west-2](https://raw.githubusercontent.com/awslabs/aws-media-insights-engine/development/docs/assets/images/launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=sagemaker-studio&templateURL=https://aws-ml-blog.s3.us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/launch.template)
 
 This setup covers two personas:
 
