@@ -9,8 +9,8 @@ Parameters:
 
 Resources:
 
-  # Policies which can be attached to Studio Users (Data Science personas) 
-  ########################################################################
+  # Policies to be attached to the SageMaker Execution role.
+  ##########################################################
 
   SageMakerReadOnlyAccessPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -180,7 +180,21 @@ Resources:
                   - ecr:BatchGetImage
                 Resource: "*"        
 
-
+  # Managed policy which can be attached to the Data Scientist Role
+  ##################################################################
+  DataScientistPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: CreatePresignedDomainUrlPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: CreatePresignedDomainUrlPolicy
+            Effect: Allow
+            Action:
+              - sagemaker:CreatePresignedDomainUrl
+            Resource: "*"
+  
   # SageMaker Domain
   ########################################################################
 

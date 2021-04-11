@@ -18,7 +18,7 @@ Resources:
         - Name: SageMaker Studio Domain
           Description: Provisions a SageMaker domain and its associated roles for Studio users
           Info:
-            LoadTemplateFromURL: https://aws-ml-blog.s3-us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/product_studio_domain.template
+            LoadTemplateFromURL: https://aws-ml-blog.s3.us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/product_studio_domain.template
 
   SageMakerUserProfileProduct:
     Type: AWS::ServiceCatalog::CloudFormationProduct
@@ -29,7 +29,7 @@ Resources:
         - Name: SageMaker Studio User Profile
           Description: Provisions a new User Profile under SageMaker Studio
           Info:
-            LoadTemplateFromURL: https://aws-ml-blog.s3-us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/product_user_profile.template
+            LoadTemplateFromURL: https://aws-ml-blog.s3.us-east-1.amazonaws.com/artifacts/best-practices-provisioning-sagemaker-studio/product_user_profile.template
 
   SageMakerStudioProductPortfolio:
     Type: AWS::ServiceCatalog::Portfolio
