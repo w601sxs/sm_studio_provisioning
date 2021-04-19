@@ -6,8 +6,8 @@
 #    --capabilities CAPABILITY_NAMED_IAM
 #     --parameters 'ParameterKey=DomainName,ParameterValue=my-sm-domain2' 'ParameterKey=VpcId,ParameterValue=vpc-493a0433' 'ParameterKey=Subnets,ParameterValue="subnet-14f21072,subnet-e06f80bf,subnet-863c8ecb"' \
 
-aws --region eu-west-2 cloudformation create-stack \
-    --stack-name SC-683059238010-pp-6au57bviwqfxm \
+aws --region us-west-2 cloudformation create-stack \
+    --stack-name studio-domain \
     --template-body file://product_studio_domain.yaml \
     --capabilities CAPABILITY_NAMED_IAM \
-    --parameters 'ParameterKey=VpcId,ParameterValue=vpc-de5475b6' 'ParameterKey=Subnets,ParameterValue=subnet-61381308' 
+    --parameters 'ParameterKey=VpcId,ParameterValue=vpc-b792bdcf' 'ParameterKey=Subnets,ParameterValue=subnet-369c166b' 
