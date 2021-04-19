@@ -20,4 +20,4 @@ Resources:
       SubnetIds: !Split [',', !Ref Subnets ]      
       AuthMode: IAM
       DefaultUserSettings:
-        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+        ExecutionRole: !Join ["", ["arn:aws:iam::", !Ref AWS::AccountId, ":role/SageMakerExecutionRole"] ]
