@@ -42,15 +42,15 @@ Below are the resources the template provisions:
 
 #### Prerequisite:
 
-Step 0. You will need an IAM user designated to use for launch product provisioning from Service Catalog. Please attach the **ServiceCatalogEndUserFullAccess** managed policy to the IAM user. Note that, the IAM user used for product provisoning from Service Catalog does not need access to SageMaker. Service Catalog will use a separate role for spinning up SageMaker Studio resources which will be also created along with the Service Catalog products.
+**Step 0.** You will need an IAM user designated to use for launch product provisioning from Service Catalog. Please attach the **ServiceCatalogEndUserFullAccess** managed policy to the IAM user. Note that, the IAM user used for product provisoning from Service Catalog does not need access to SageMaker. Service Catalog will use a separate role for spinning up SageMaker Studio resources which will be also created along with the Service Catalog products.
 
 Note that, you also can create just an IAM role instead of an IAM user which can be assumed before product provisioning.
 
-Step 1. Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch to other regions before starting the CNF template.
+**Step 1.** Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch to other regions before starting the CNF template.
 
-Step 2. Click next
+**Step 2.** Click next
 
-Step 3. Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product. Use the user you just created during the first step. Click the **Next** button.
+**Step 3.** Update the Launch Principal. This can be an IAM user, group or role which grants provisioning access to this product. Use the user you just created during the first step. Click the **Next** button.
  
 ![Alt Launch Principal](assets/launch_principal.jpg?raw=true "Launch Principal")
   
