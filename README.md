@@ -46,7 +46,7 @@ Below are the resources the template provisions:
 
 Note that, you also can create just an IAM role instead of an IAM user which can be assumed before product provisioning.
 
-**Step 1.** Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch to other regions before starting the CNF template.
+**Step 1.** Click on the Launch button above. Note - by default the template will launch in US-WEST-2 and you can switch to other regions before starting the CloudFormation template.
 
 **Step 2.** Click next
 
@@ -64,6 +64,8 @@ Note that, you also can create just an IAM role instead of an IAM user which can
 
 
 ### Provision SageMaker Studio Domain
+
+> **Note** - First see Step 3 above. A user that was chosen as the launch principal, or a user with the Launch principal role can launch these products. If you are logged in as another user you will not see an option to launch these products. 
 
 1. Go to **AWS Console / Service Catalog / Products**. Launch the **SageMaker Studio** product.
 
